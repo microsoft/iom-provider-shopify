@@ -1,14 +1,18 @@
-# Project
+# Introduction
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This is a custom provider for Shopify for Dynamics 365 Intelligent Order Management. In order to use this custom provider, you will need to have a deployed and activated IOM environment available.
 
-As the maintainer of this project, please make a few updates:
-
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+# Installation
+1. Download one of the official releases as a zip file. Alternatively download the source and create a zip file from the base directory.
+2. Navigate to your Power Automate Portal for your environment. This portal will have your solutions
+3. Click on Import Solution at the top
+4. Find your downloaded solution and import
+5. Navigate to IOM UI
+6. Open your provider catalog and find Shopify
+7. Click "Add Provider"
+8. Activate your connections. There should be 2 of them. Specify your shopify StoreURL and credentials
+9. Activate your provider
+10. Use the newly activated provider in an Orchestration Flow
 
 ## Contributing
 
