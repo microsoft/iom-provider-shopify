@@ -1,0 +1,13 @@
+<msdyn_iomproviderdefinitiontransformation msdyn_logicalname="msdyn_shopify_shopifycustomer_guestaccount">
+  <iscustomizable>0</iscustomizable>
+  <msdyn_destinationobjectname>Dataverse Guest Account</msdyn_destinationobjectname>
+  <msdyn_displayname default="Shopify Customer to Dataverse Guest Account">
+    <label description="Shopify Customer to Dataverse Guest Account" languagecode="1033" />
+  </msdyn_displayname>
+  <msdyn_iomproviderdefinition>
+    <msdyn_logicalname>msdyn_shopify</msdyn_logicalname>
+  </msdyn_iomproviderdefinition>
+  <msdyn_iomtransformationsourcetype>192350001</msdyn_iomtransformationsourcetype>
+  <msdyn_sampledata mimetype="text/plain">samplesourcedata.txt</msdyn_sampledata>
+  <msdyn_sourceobjectname>Shopify Customer</msdyn_sourceobjectname>
+</msdyn_iomproviderdefinitiontransformation>

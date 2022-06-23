@@ -1,0 +1,314 @@
+{
+	"properties": {
+		"connectionReferences": {
+			"shared_commondataserviceforapps": {
+				"runtimeSource": "embedded",
+				"connection": {
+					"connectionReferenceLogicalName": "msdyn_sharedcommondataserviceforapps_iomshopify"
+				},
+				"api": {
+					"name": "shared_commondataserviceforapps"
+				}
+			},
+			"shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f": {
+				"runtimeSource": "embedded",
+				"connection": {
+					"connectionReferenceLogicalName": "msdyn_shopify_iom"
+				},
+				"api": {
+					"name": "shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f"
+				}
+			}
+		},
+		"definition": {
+			"$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+			"contentVersion": "1.0.0.0",
+			"parameters": {
+				"$connections": {
+					"defaultValue": {},
+					"type": "Object"
+				},
+				"$authentication": {
+					"defaultValue": {},
+					"type": "SecureObject"
+				}
+			},
+			"triggers": {
+				"manual": {
+					"metadata": {
+						"operationMetadataId": "2b787bae-c415-4cd2-9e24-bab96fb0120b"
+					},
+					"type": "Request",
+					"kind": "Http",
+					"inputs": {
+						"schema": {
+							"type": "object",
+							"properties": {
+								"text": {
+									"title": "ProviderActionExecutionEventId",
+									"type": "string",
+									"x-ms-dynamically-added": true,
+									"description": "Please enter your input",
+									"x-ms-content-hint": "TEXT"
+								},
+								"text_1": {
+									"title": "EntityRecordId",
+									"type": "string",
+									"x-ms-dynamically-added": true,
+									"description": "Please enter your input",
+									"x-ms-content-hint": "TEXT"
+								}
+							},
+							"required": [
+								"text",
+								"text_1"
+							]
+						}
+					}
+				}
+			},
+			"actions": {
+				"Initialize_Provider_Variables": {
+					"runAfter": {
+						"IOM_System_Properties": [
+							"Succeeded"
+						]
+					},
+					"metadata": {
+						"operationMetadataId": "955fbe11-10d3-4b78-84cb-e00ba62e73e5"
+					},
+					"type": "ParseJson",
+					"inputs": {
+						"content": {
+							"ExternalFieldName": "id"
+						},
+						"schema": {
+							"type": "object",
+							"properties": {
+								"ExternalFieldName": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"IOM_System_Properties": {
+					"runAfter": {},
+					"metadata": {
+						"operationMetadataId": "6fb8c38a-a98e-4dfa-bfa6-7361290ff050"
+					},
+					"type": "ParseJson",
+					"inputs": {
+						"content": {
+							"ProviderId": "82d5c2ce-424a-42d4-af80-002f2ebea166",
+							"MappingGroupId": "b3591054-611d-ec11-b6e6-0022480a5ca9"
+						},
+						"schema": {
+							"type": "object",
+							"properties": {
+								"ProviderId": {
+									"type": "string"
+								},
+								"MappingGroupId": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"Initialize_ExecutionResult_variable": {
+					"runAfter": {},
+					"metadata": {
+						"operationMetadataId": "62e72e6a-cc12-4847-9938-0c72f023f0d7"
+					},
+					"type": "InitializeVariable",
+					"inputs": {
+						"variables": [
+							{
+								"name": "ExecutionResult",
+								"type": "boolean",
+								"value": "@true"
+							}
+						]
+					}
+				},
+				"Finally": {
+					"actions": {
+						"Complete_Provider_Action_Execution": {
+							"runAfter": {},
+							"metadata": {
+								"operationMetadataId": "09da787f-6f6a-43ce-8e7b-f3aa4a3e2f1a"
+							},
+							"type": "OpenApiConnection",
+							"inputs": {
+								"host": {
+									"connectionName": "shared_commondataserviceforapps",
+									"operationId": "PerformUnboundAction",
+									"apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+								},
+								"parameters": {
+									"actionName": "msdyn_CompleteProviderActionExecution",
+									"item/ExecutionResult": "@variables('ExecutionResult')",
+									"item/ProviderActionExecutionEventId": "@triggerBody()['text']"
+								},
+								"authentication": {
+									"type": "Raw",
+									"value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+								}
+							}
+						}
+					},
+					"runAfter": {
+						"Catch": [
+							"Succeeded"
+						]
+					},
+					"metadata": {
+						"operationMetadataId": "fb8eabab-1be2-44dc-ae96-28c095f382ef"
+					},
+					"type": "Scope"
+				},
+				"Catch": {
+					"actions": {
+						"Set_the_execution_result_to_failed": {
+							"runAfter": {},
+							"metadata": {
+								"operationMetadataId": "07fa6554-45e0-4b72-95f2-fcc9adb58d45"
+							},
+							"type": "SetVariable",
+							"inputs": {
+								"name": "ExecutionResult",
+								"value": "@false"
+							}
+						}
+					},
+					"runAfter": {
+						"Try": [
+							"Succeeded"
+						]
+					},
+					"metadata": {
+						"operationMetadataId": "a2feb42d-718d-4a0a-94e3-6c648abe57b2"
+					},
+					"type": "Scope"
+				},
+				"Try": {
+					"actions": {
+						"Start_Provider_Action_Execution": {
+							"runAfter": {},
+							"metadata": {
+								"operationMetadataId": "cf08992f-8ed9-488c-b487-2ccece015495"
+							},
+							"type": "OpenApiConnection",
+							"inputs": {
+								"host": {
+									"connectionName": "shared_commondataserviceforapps",
+									"operationId": "PerformUnboundAction",
+									"apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+								},
+								"parameters": {
+									"actionName": "msdyn_StartProviderActionExecution",
+									"item/ProviderActionExecutionEventId": "@triggerBody()['text']",
+									"item/PowerAutomateRunId": "@workflow()['run']?['name']"
+								},
+								"authentication": {
+									"type": "Raw",
+									"value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+								}
+							}
+						},
+						"Check_Order_Mapping": {
+							"runAfter": {
+								"Start_Provider_Action_Execution": [
+									"Succeeded"
+								]
+							},
+							"metadata": {
+								"operationMetadataId": "621f8596-27d6-408a-83fa-ad5ceb7a0e1c"
+							},
+							"type": "Workflow",
+							"inputs": {
+								"host": {
+									"workflowReferenceName": "d46e204d-6ac7-4bdd-926f-6f9d8911af20"
+								},
+								"body": {
+									"text": "@string('msdyn_iommap_orders')",
+									"text_1": "@body('IOM_System_Properties')?['ProviderId']",
+									"text_2": "@body('IOM_System_Properties')?['MappingGroupId']",
+									"text_3": "@triggerBody()['text_1']",
+									"text_4": "@body('Initialize_Provider_Variables')?['ExternalFieldName']"
+								}
+							}
+						},
+						"Check_if_Order_Already_Exists_in_IOM": {
+							"actions": {
+								"Cancel_an_order": {
+									"runAfter": {
+										"Compose_Order_Mapping": [
+											"Succeeded"
+										]
+									},
+									"metadata": {
+										"operationMetadataId": "be193842-2349-44e0-8347-e2acfa79aeaf"
+									},
+									"type": "OpenApiConnection",
+									"inputs": {
+										"host": {
+											"connectionName": "shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f",
+											"operationId": "Cancel_An_Order",
+											"apiId": "/providers/Microsoft.PowerApps/apis/shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f"
+										},
+										"parameters": {
+											"order_id": "@outputs('Compose_Order_Mapping')?['msdyn_externalfieldvalue']"
+										},
+										"authentication": {
+											"type": "Raw",
+											"value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+										}
+									}
+								},
+								"Compose_Order_Mapping": {
+									"runAfter": {},
+									"metadata": {
+										"operationMetadataId": "406f4385-5ece-4c55-9c32-4ad3c67a6cb7"
+									},
+									"type": "Compose",
+									"inputs": "@json(outputs('Check_Order_Mapping')?['Body']?['mappingrecord'])?[0]"
+								}
+							},
+							"runAfter": {
+								"Check_Order_Mapping": [
+									"Succeeded"
+								]
+							},
+							"expression": {
+								"equals": [
+									"@body('Check_Order_Mapping')?['mappingexist']",
+									"@true"
+								]
+							},
+							"metadata": {
+								"operationMetadataId": "e4310118-525e-4ec8-a6bb-80f0343bf082"
+							},
+							"type": "If"
+						}
+					},
+					"runAfter": {
+						"Initialize_ExecutionResult_variable": [
+							"Succeeded"
+						],
+						"Initialize_Provider_Variables": [
+							"Succeeded"
+						]
+					},
+					"metadata": {
+						"operationMetadataId": "85e4bda0-10b4-4690-a33a-ebc7c9920cc8"
+					},
+					"type": "Scope"
+				}
+			},
+			"outputs": {}
+		}
+	},
+	"schemaVersion": "1.0.0.0"
+}

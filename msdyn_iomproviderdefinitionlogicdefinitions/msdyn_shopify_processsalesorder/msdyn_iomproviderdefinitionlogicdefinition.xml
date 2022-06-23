@@ -1,0 +1,13 @@
+<msdyn_iomproviderdefinitionlogicdefinition msdyn_logicalname="msdyn_shopify_processsalesorder">
+  <iscustomizable>0</iscustomizable>
+  <msdyn_displayname default="Process Shopify Sales Order">
+    <label description="Process Shopify Sales Order" languagecode="1033" />
+  </msdyn_displayname>
+  <msdyn_iomproviderdefinition>
+    <msdyn_logicalname>msdyn_shopify</msdyn_logicalname>
+  </msdyn_iomproviderdefinition>
+  <msdyn_logictype>192350000</msdyn_logictype>
+  <msdyn_maxretryattempts>3</msdyn_maxretryattempts>
+  <msdyn_timeoutminutes>5</msdyn_timeoutminutes>
+  <msdyn_workflowid>7a5c58e4-d92c-ec11-b6e5-0022481f647c</msdyn_workflowid>
+</msdyn_iomproviderdefinitionlogicdefinition>

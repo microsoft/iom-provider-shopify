@@ -1,0 +1,13 @@
+<msdyn_iomproviderdefinitionconnectionref msdyn_logicalname="msdyn_sharedcommondataserviceforapps_iomshopify">
+  <iscustomizable>0</iscustomizable>
+  <msdyn_connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</msdyn_connectorid>
+  <msdyn_description default="Enables communication from Shopify to Dataverse entities in Dynamics 365 Intelligent Order Management.">
+    <label description="Enables communication from Shopify to Dataverse entities in Dynamics 365 Intelligent Order Management." languagecode="1033" />
+  </msdyn_description>
+  <msdyn_displayname default="Shopify Dataverse (current environment) Connection">
+    <label description="Shopify Dataverse (current environment) Connection" languagecode="1033" />
+  </msdyn_displayname>
+  <msdyn_iomproviderdefinition>
+    <msdyn_logicalname>msdyn_shopify</msdyn_logicalname>
+  </msdyn_iomproviderdefinition>
+</msdyn_iomproviderdefinitionconnectionref>

@@ -1,0 +1,627 @@
+{
+   "order":{
+      "id":3819975508122,
+      "admin_graphql_api_id":"gid://shopify/Order/3819975508122",
+      "app_id":1608003,
+      "browser_ip":null,
+      "buyer_accepts_marketing":false,
+      "cancel_reason":null,
+      "cancelled_at":null,
+      "cart_token":null,
+      "checkout_id":null,
+      "checkout_token":null,
+      "closed_at":null,
+      "confirmed":true,
+      "contact_email":"egnition_sample_76@egnition.com",
+      "created_at":"2021-05-23T13:22:16+05:00",
+      "currency":"USD",
+      "current_subtotal_price":"0.30",
+      "current_subtotal_price_set":{
+         "shop_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         }
+      },
+      "current_total_discounts":"0.00",
+      "current_total_discounts_set":{
+         "shop_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         }
+      },
+      "current_total_duties_set":null,
+      "current_total_price":"0.30",
+      "current_total_price_set":{
+         "shop_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         }
+      },
+      "current_total_tax":"0.00",
+      "current_total_tax_set":{
+         "shop_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         }
+      },
+      "customer_locale":null,
+      "device_id":null,
+      "discount_codes":[
+         
+      ],
+      "email":"egnition_sample_76@egnition.com",
+      "financial_status":"pending",
+      "fulfillment_status":"fulfilled",
+      "gateway":"",
+      "landing_site":null,
+      "landing_site_ref":null,
+      "location_id":null,
+      "name":"#1019",
+      "note":null,
+      "note_attributes":[
+         
+      ],
+      "number":19,
+      "order_number":1019,
+      "order_status_url":"https://test123shopnow.myshopify.com/56837275802/orders/94cfd9523ab4427521e858760257b058/authenticate?key=72d5939f1b508e1db14c964e8d3f3ca7",
+      "original_total_duties_set":null,
+      "payment_gateway_names":[
+         
+      ],
+      "phone":null,
+      "presentment_currency":"USD",
+      "processed_at":"2021-05-23T13:22:16+05:00",
+      "processing_method":"",
+      "reference":null,
+      "referring_site":null,
+      "source_identifier":null,
+      "source_name":"1608003",
+      "source_url":null,
+      "subtotal_price":"0.30",
+      "subtotal_price_set":{
+         "shop_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         }
+      },
+      "tags":"External",
+      "tax_lines":[
+         
+      ],
+      "taxes_included":false,
+      "test":false,
+      "token":"placeholder",
+      "total_discounts":"0.00",
+      "total_discounts_set":{
+         "shop_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         }
+      },
+      "total_line_items_price":"0.30",
+      "total_line_items_price_set":{
+         "shop_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         }
+      },
+      "total_outstanding":"0.30",
+      "total_price":"0.30",
+      "total_price_set":{
+         "shop_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.30",
+            "currency_code":"USD"
+         }
+      },
+      "total_price_usd":"0.00",
+      "total_shipping_price_set":{
+         "shop_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         }
+      },
+      "total_tax":"0.00",
+      "total_tax_set":{
+         "shop_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         },
+         "presentment_money":{
+            "amount":"0.00",
+            "currency_code":"USD"
+         }
+      },
+      "total_tip_received":"0.00",
+      "total_weight":0,
+      "updated_at":"2021-07-01T18:06:15+05:00",
+      "user_id":null,
+      "billing_address":{
+         "first_name":"Fitzgerald",
+         "address1":"Ap #490-3028 Leo. St.",
+         "phone":"+22822258965",
+         "city":"Tarbes",
+         "zip":"02373",
+         "province":"Midi-Pyrenees",
+         "country":"Togo",
+         "last_name":"Gonzalez",
+         "address2":null,
+         "company":null,
+         "latitude":null,
+         "longitude":null,
+         "name":"Fitzgerald Gonzalez",
+         "country_code":"TG",
+         "province_code":null
+      },
+      "customer":{
+         "id":5267646972058,
+         "email":"egnition_sample_76@egnition.com",
+         "accepts_marketing":false,
+         "created_at":"2021-05-23T13:17:20+05:00",
+         "updated_at":"2021-05-23T13:22:16+05:00",
+         "first_name":"Fitzgerald",
+         "last_name":"Gonzalez",
+         "orders_count":5,
+         "state":"disabled",
+         "total_spent":"0.90",
+         "last_order_id":3819975508122,
+         "note":null,
+         "verified_email":true,
+         "multipass_identifier":null,
+         "tax_exempt":false,
+         "phone":"+22822256347",
+         "tags":"egnition-sample-data",
+         "last_order_name":"#1019",
+         "currency":"USD",
+         "accepts_marketing_updated_at":"2021-05-23T13:17:20+05:00",
+         "marketing_opt_in_level":null,
+         "tax_exemptions":[
+            
+         ],
+         "admin_graphql_api_id":"gid://shopify/Customer/5267646972058",
+         "default_address":{
+            "id":6433449803930,
+            "customer_id":5267646972058,
+            "first_name":"Fitzgerald",
+            "last_name":"Gonzalez",
+            "company":null,
+            "address1":"Ap #490-3028 Leo. St.",
+            "address2":null,
+            "city":"Tarbes",
+            "province":"Midi-Pyrenees",
+            "country":"Togo",
+            "zip":"02373",
+            "phone":"+22822258965",
+            "name":"Fitzgerald Gonzalez",
+            "province_code":null,
+            "country_code":"TG",
+            "country_name":"Togo",
+            "default":true
+         }
+      },
+      "discount_applications":[
+         
+      ],
+      "fulfillments":[
+         {
+            "id":3408737632410,
+            "admin_graphql_api_id":"gid://shopify/Fulfillment/3408737632410",
+            "created_at":"2021-06-07T19:30:42+05:00",
+            "location_id":62620532890,
+            "name":"#1019.1",
+            "order_id":3819975508122,
+            "receipt":{
+               
+            },
+            "service":"manual",
+            "shipment_status":null,
+            "status":"success",
+            "tracking_company":"TNT",
+            "tracking_number":"123456789",
+            "tracking_numbers":[
+               "123456789"
+            ],
+            "tracking_url":"https://shipping.xyz/track.php?num=123456789",
+            "tracking_urls":[
+               "https://shipping.xyz/track.php?num=123456789",
+               "https://anothershipper.corp/track.php?code=abc"
+            ],
+            "updated_at":"2021-06-07T19:30:42+05:00",
+            "line_items":[
+               {
+                  "id":9947332542618,
+                  "admin_graphql_api_id":"gid://shopify/LineItem/9947332542618",
+                  "fulfillable_quantity":0,
+                  "fulfillment_service":"manual",
+                  "fulfillment_status":"fulfilled",
+                  "gift_card":false,
+                  "grams":0,
+                  "name":"CONVERSE | CHUCK TAYLOR ALL STAR LO - 6 / white",
+                  "price":"0.10",
+                  "price_set":{
+                     "shop_money":{
+                        "amount":"0.10",
+                        "currency_code":"USD"
+                     },
+                     "presentment_money":{
+                        "amount":"0.10",
+                        "currency_code":"USD"
+                     }
+                  },
+                  "product_exists":true,
+                  "product_id":6760875688090,
+                  "properties":[
+                     
+                  ],
+                  "quantity":1,
+                  "requires_shipping":true,
+                  "sku":"C-01-white-6",
+                  "taxable":true,
+                  "title":"CONVERSE | CHUCK TAYLOR ALL STAR LO",
+                  "total_discount":"0.00",
+                  "total_discount_set":{
+                     "shop_money":{
+                        "amount":"0.00",
+                        "currency_code":"USD"
+                     },
+                     "presentment_money":{
+                        "amount":"0.00",
+                        "currency_code":"USD"
+                     }
+                  },
+                  "variant_id":39938093416602,
+                  "variant_inventory_management":"shopify",
+                  "variant_title":"6 / white",
+                  "vendor":"CONVERSE",
+                  "tax_lines":[
+                     
+                  ],
+                  "duties":[
+                     
+                  ],
+                  "discount_allocations":[
+                     
+                  ]
+               },
+               {
+                  "id":9947332575386,
+                  "admin_graphql_api_id":"gid://shopify/LineItem/9947332575386",
+                  "fulfillable_quantity":0,
+                  "fulfillment_service":"manual",
+                  "fulfillment_status":"fulfilled",
+                  "gift_card":false,
+                  "grams":0,
+                  "name":"DR MARTENS | 1461 DMC 3-EYE SHOE | BLACK SMOOTH - 9 / black",
+                  "price":"0.10",
+                  "price_set":{
+                     "shop_money":{
+                        "amount":"0.10",
+                        "currency_code":"USD"
+                     },
+                     "presentment_money":{
+                        "amount":"0.10",
+                        "currency_code":"USD"
+                     }
+                  },
+                  "product_exists":true,
+                  "product_id":6760875229338,
+                  "properties":[
+                     
+                  ],
+                  "quantity":1,
+                  "requires_shipping":true,
+                  "sku":"DM-01-black-9",
+                  "taxable":true,
+                  "title":"DR MARTENS | 1461 DMC 3-EYE SHOE | BLACK SMOOTH",
+                  "total_discount":"0.00",
+                  "total_discount_set":{
+                     "shop_money":{
+                        "amount":"0.00",
+                        "currency_code":"USD"
+                     },
+                     "presentment_money":{
+                        "amount":"0.00",
+                        "currency_code":"USD"
+                     }
+                  },
+                  "variant_id":39938089353370,
+                  "variant_inventory_management":"shopify",
+                  "variant_title":"9 / black",
+                  "vendor":"DR MARTENS",
+                  "tax_lines":[
+                     
+                  ],
+                  "duties":[
+                     
+                  ],
+                  "discount_allocations":[
+                     
+                  ]
+               },
+               {
+                  "id":9947332608154,
+                  "admin_graphql_api_id":"gid://shopify/LineItem/9947332608154",
+                  "fulfillable_quantity":0,
+                  "fulfillment_service":"manual",
+                  "fulfillment_status":"fulfilled",
+                  "gift_card":false,
+                  "grams":0,
+                  "name":"SUPRA | MENS VAIDER - 9 / gray",
+                  "price":"0.10",
+                  "price_set":{
+                     "shop_money":{
+                        "amount":"0.10",
+                        "currency_code":"USD"
+                     },
+                     "presentment_money":{
+                        "amount":"0.10",
+                        "currency_code":"USD"
+                     }
+                  },
+                  "product_exists":true,
+                  "product_id":6760874377370,
+                  "properties":[
+                     
+                  ],
+                  "quantity":1,
+                  "requires_shipping":true,
+                  "sku":"su-01-gray-9",
+                  "taxable":true,
+                  "title":"SUPRA | MENS VAIDER",
+                  "total_discount":"0.00",
+                  "total_discount_set":{
+                     "shop_money":{
+                        "amount":"0.00",
+                        "currency_code":"USD"
+                     },
+                     "presentment_money":{
+                        "amount":"0.00",
+                        "currency_code":"USD"
+                     }
+                  },
+                  "variant_id":39938086568090,
+                  "variant_inventory_management":"shopify",
+                  "variant_title":"9 / gray",
+                  "vendor":"SUPRA",
+                  "tax_lines":[
+                     
+                  ],
+                  "duties":[
+                     
+                  ],
+                  "discount_allocations":[
+                     
+                  ]
+               }
+            ]
+         }
+      ],
+      "line_items":[
+         {
+            "id":9947332542618,
+            "admin_graphql_api_id":"gid://shopify/LineItem/9947332542618",
+            "fulfillable_quantity":0,
+            "fulfillment_service":"manual",
+            "fulfillment_status":"fulfilled",
+            "gift_card":false,
+            "grams":0,
+            "name":"CONVERSE | CHUCK TAYLOR ALL STAR LO - 6 / white",
+            "price":"0.10",
+            "price_set":{
+               "shop_money":{
+                  "amount":"0.10",
+                  "currency_code":"USD"
+               },
+               "presentment_money":{
+                  "amount":"0.10",
+                  "currency_code":"USD"
+               }
+            },
+            "product_exists":true,
+            "product_id":6760875688090,
+            "properties":[
+               
+            ],
+            "quantity":1,
+            "requires_shipping":true,
+            "sku":"C-01-white-6",
+            "taxable":true,
+            "title":"CONVERSE | CHUCK TAYLOR ALL STAR LO",
+            "total_discount":"0.00",
+            "total_discount_set":{
+               "shop_money":{
+                  "amount":"0.00",
+                  "currency_code":"USD"
+               },
+               "presentment_money":{
+                  "amount":"0.00",
+                  "currency_code":"USD"
+               }
+            },
+            "variant_id":39938093416602,
+            "variant_inventory_management":"shopify",
+            "variant_title":"6 / white",
+            "vendor":"CONVERSE",
+            "tax_lines":[
+               
+            ],
+            "duties":[
+               
+            ],
+            "discount_allocations":[
+               
+            ]
+         },
+         {
+            "id":9947332575386,
+            "admin_graphql_api_id":"gid://shopify/LineItem/9947332575386",
+            "fulfillable_quantity":0,
+            "fulfillment_service":"manual",
+            "fulfillment_status":"fulfilled",
+            "gift_card":false,
+            "grams":0,
+            "name":"DR MARTENS | 1461 DMC 3-EYE SHOE | BLACK SMOOTH - 9 / black",
+            "price":"0.10",
+            "price_set":{
+               "shop_money":{
+                  "amount":"0.10",
+                  "currency_code":"USD"
+               },
+               "presentment_money":{
+                  "amount":"0.10",
+                  "currency_code":"USD"
+               }
+            },
+            "product_exists":true,
+            "product_id":6760875229338,
+            "properties":[
+               
+            ],
+            "quantity":1,
+            "requires_shipping":true,
+            "sku":"DM-01-black-9",
+            "taxable":true,
+            "title":"DR MARTENS | 1461 DMC 3-EYE SHOE | BLACK SMOOTH",
+            "total_discount":"0.00",
+            "total_discount_set":{
+               "shop_money":{
+                  "amount":"0.00",
+                  "currency_code":"USD"
+               },
+               "presentment_money":{
+                  "amount":"0.00",
+                  "currency_code":"USD"
+               }
+            },
+            "variant_id":39938089353370,
+            "variant_inventory_management":"shopify",
+            "variant_title":"9 / black",
+            "vendor":"DR MARTENS",
+            "tax_lines":[
+               
+            ],
+            "duties":[
+               
+            ],
+            "discount_allocations":[
+               
+            ]
+         },
+         {
+            "id":9947332608154,
+            "admin_graphql_api_id":"gid://shopify/LineItem/9947332608154",
+            "fulfillable_quantity":0,
+            "fulfillment_service":"manual",
+            "fulfillment_status":"fulfilled",
+            "gift_card":false,
+            "grams":0,
+            "name":"SUPRA | MENS VAIDER - 9 / gray",
+            "price":"0.10",
+            "price_set":{
+               "shop_money":{
+                  "amount":"0.10",
+                  "currency_code":"USD"
+               },
+               "presentment_money":{
+                  "amount":"0.10",
+                  "currency_code":"USD"
+               }
+            },
+            "product_exists":true,
+            "product_id":6760874377370,
+            "properties":[
+               
+            ],
+            "quantity":1,
+            "requires_shipping":true,
+            "sku":"su-01-gray-9",
+            "taxable":true,
+            "title":"SUPRA | MENS VAIDER",
+            "total_discount":"0.00",
+            "total_discount_set":{
+               "shop_money":{
+                  "amount":"0.00",
+                  "currency_code":"USD"
+               },
+               "presentment_money":{
+                  "amount":"0.00",
+                  "currency_code":"USD"
+               }
+            },
+            "variant_id":39938086568090,
+            "variant_inventory_management":"shopify",
+            "variant_title":"9 / gray",
+            "vendor":"SUPRA",
+            "tax_lines":[
+               
+            ],
+            "duties":[
+               
+            ],
+            "discount_allocations":[
+               
+            ]
+         }
+      ],
+      "refunds":[
+         
+      ],
+      "shipping_address":{
+         "first_name":"Fitzgerald",
+         "address1":"Ap #490-3028 Leo. St.",
+         "phone":"+22822258965",
+         "city":"Tarbes",
+         "zip":"02373",
+         "province":"Midi-Pyrenees",
+         "country":"Togo",
+         "last_name":"Gonzalez",
+         "address2":null,
+         "company":null,
+         "latitude":null,
+         "longitude":null,
+         "name":"Fitzgerald Gonzalez",
+         "country_code":"TG",
+         "province_code":null
+      },
+      "shipping_lines":[
+         
+      ]
+   },
+   "useWriteInProductEnabled": false,
+   "isDualWriteEnabled": false
+} 

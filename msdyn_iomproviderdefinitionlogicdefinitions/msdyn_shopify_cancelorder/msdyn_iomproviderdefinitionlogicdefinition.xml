@@ -1,0 +1,16 @@
+<msdyn_iomproviderdefinitionlogicdefinition msdyn_logicalname="msdyn_shopify_cancelorder">
+  <iscustomizable>0</iscustomizable>
+  <msdyn_displayname default="Shopify cancel order">
+    <label description="Shopify cancel order" languagecode="1033" />
+  </msdyn_displayname>
+  <msdyn_iomactiontype>
+    <msdyn_iomactiontypeid>9a210207-d5d9-eb11-bacc-002248029d66</msdyn_iomactiontypeid>
+  </msdyn_iomactiontype>
+  <msdyn_iomproviderdefinition>
+    <msdyn_logicalname>msdyn_shopify</msdyn_logicalname>
+  </msdyn_iomproviderdefinition>
+  <msdyn_logictype>192350001</msdyn_logictype>
+  <msdyn_maxretryattempts>3</msdyn_maxretryattempts>
+  <msdyn_timeoutminutes>5</msdyn_timeoutminutes>
+  <msdyn_workflowid>2800d8e1-74e5-eb11-bacb-000d3a57d758</msdyn_workflowid>
+</msdyn_iomproviderdefinitionlogicdefinition>

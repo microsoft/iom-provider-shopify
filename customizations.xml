@@ -1,0 +1,30 @@
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Entities></Entities>
+  <Roles></Roles>
+  <Workflows></Workflows>
+  <FieldSecurityProfiles></FieldSecurityProfiles>
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <CustomControls />
+  <EntityDataProviders />
+  <Connectors>
+    <Connector>
+      <connectorid>139664a7-6667-490e-b6c7-9146dbc47049</connectorid>
+      <description>REST interface for Shopify's merchants to receive, process, and manage their orders.</description>
+      <displayname>Shopify</displayname>
+      <iconbrandcolor>#007ee5</iconbrandcolor>
+      <name>cr1a6_shopify</name>
+      <connectortype>1</connectortype>
+      <openapidefinition>/Connector/cr1a6_shopify_openapidefinition.json</openapidefinition>
+      <connectionparameters>/Connector/cr1a6_shopify_connectionparameters.json</connectionparameters>
+      <policytemplateinstances>/Connector/cr1a6_shopify_policytemplateinstances.json</policytemplateinstances>
+      <iconblob>/Connector/cr1a6_shopify_iconblob.Png</iconblob>
+    </Connector>
+  </Connectors>
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

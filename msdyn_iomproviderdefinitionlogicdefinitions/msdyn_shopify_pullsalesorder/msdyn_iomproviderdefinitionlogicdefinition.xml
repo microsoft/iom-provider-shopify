@@ -1,0 +1,13 @@
+<msdyn_iomproviderdefinitionlogicdefinition msdyn_logicalname="msdyn_shopify_pullsalesorder">
+  <iscustomizable>0</iscustomizable>
+  <msdyn_displayname default="Pull Shopify Sales Orders">
+    <label description="Pull Shopify Sales Orders" languagecode="1033" />
+  </msdyn_displayname>
+  <msdyn_iomproviderdefinition>
+    <msdyn_logicalname>msdyn_shopify</msdyn_logicalname>
+  </msdyn_iomproviderdefinition>
+  <msdyn_logictype>192350003</msdyn_logictype>
+  <msdyn_maxretryattempts>3</msdyn_maxretryattempts>
+  <msdyn_timeoutminutes>5</msdyn_timeoutminutes>
+  <msdyn_workflowid>d27f76d0-45e0-4628-9d43-b74eb69c5204</msdyn_workflowid>
+</msdyn_iomproviderdefinitionlogicdefinition>

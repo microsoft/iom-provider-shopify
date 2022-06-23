@@ -1,0 +1,487 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "msdyn_sharedcommondataserviceforapps_iomshopify"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "1bc43567-531a-4973-b078-314a11fab118"
+          },
+          "type": "Request",
+          "kind": "Http",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "Payload",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Shopify Sales Order Object.",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "Puller ExecutionId",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "IOM_System_Properties": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "c35385ad-6ef6-4d14-b4a8-a3003d7cf252"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": {
+              "ProviderId": "e9028516-9eeb-45a3-870b-394bdbdfb187",
+              "MappingGroupId": "b3591054-611d-ec11-b6e6-0022480a5ca9"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ProviderId": {
+                  "type": "string"
+                },
+                "MappingGroupId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Initialize_Provider_Variables": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "0b38785c-36a7-4d0f-a58a-757ec17ba14e"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": {
+              "SourceObjectName": "Shopify Sales Order",
+              "DestinationObjectName": "Dataverse Sales Order",
+              "ExternalFieldName": "id",
+              "CancelOrderRequestEvent": "9e8e8202-ecda-eb11-bacc-000d3a3744ce"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "SourceObjectName": {
+                  "type": "string"
+                },
+                "DestinationObjectName": {
+                  "type": "string"
+                },
+                "ExternalFieldName": {
+                  "type": "string"
+                },
+                "CancelOrderRequestEvent": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Initialize_Processing_Execution_Result": {
+          "runAfter": {
+            "Initialize_Provider_Variables": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "2256ab51-e463-42bb-b621-b6b403a7189c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ExecutionResult",
+                "type": "boolean",
+                "value": "@true"
+              }
+            ]
+          }
+        },
+        "Initialize_Sales_Order_Object": {
+          "runAfter": {
+            "IOM_System_Properties": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "86488171-f8c1-401b-bac5-23d1001cec37"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "SalesOrder",
+                "type": "object",
+                "value": "@json(triggerBody()['text'])"
+              }
+            ]
+          }
+        },
+        "Try": {
+          "actions": {
+            "Acknowledge_the_Provider_Message_in_IOM": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "f47e4dcd-376c-4c3e-8066-c885bf08f2cc"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "PerformUnboundAction",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "actionName": "msdyn_CreateProviderMessageRequestExecution",
+                  "item/PowerAutomateWorkflowId": "@workflow()['tags']['xrmWorkflowId']",
+                  "item/PowerAutomateRunId": "@workflow()['run']?['name']",
+                  "item/ProviderMessageExternalRequestId": "@concat(variables('SalesOrder')?['id'], ' - ', variables('SalesOrder')?['updated_at'])",
+                  "item/ProviderMessagePullerExecutionId": "@if(empty(triggerBody()?['text_1']), null,triggerBody()?['text_1'])"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "If_Order_Cancelled": {
+              "actions": {
+                "Cancel_-_Check_if_Order_Already_Exists_in_IOM": {
+                  "actions": {
+                    "Compose_Order_Mapping": {
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "75c65744-19ec-437f-9b14-745cfa5db6fb"
+                      },
+                      "type": "Compose",
+                      "inputs": "@json(outputs('Check_Order_Mapping')?['Body']?['mappingrecord'])?[0]"
+                    },
+                    "Raise_Cancel_Order_Request": {
+                      "runAfter": {
+                        "Compose_Order_Mapping": [
+                          "Succeeded"
+                        ]
+                      },
+                      "metadata": {
+                        "operationMetadataId": "0a30b2d9-eb20-4878-aa6e-cfb0885efe4b"
+                      },
+                      "type": "Workflow",
+                      "inputs": {
+                        "host": {
+                          "workflowReferenceName": "4b3485aa-4f24-eb11-a813-000d3a54419d"
+                        },
+                        "body": {
+                          "text_1": "@body('Initialize_Provider_Variables')?['CancelOrderRequestEvent']",
+                          "text": "@outputs('Compose_Order_Mapping')?['msdyn_internalrecord_value']"
+                        }
+                      }
+                    }
+                  },
+                  "runAfter": {},
+                  "expression": {
+                    "equals": [
+                      "@body('Check_Order_Mapping')?['mappingexist']",
+                      "@true"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "746707b6-78fe-43c1-8e71-48dbe60f7b7a"
+                  },
+                  "type": "If"
+                }
+              },
+              "runAfter": {
+                "Check_Order_Mapping": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Create_-_Check_if_Order_Already_Exists_in_IOM": {
+                    "actions": {
+                      "Formatting_Order_JSON_for_Transformation": {
+                        "runAfter": {},
+                        "metadata": {
+                          "operationMetadataId": "347bc5f6-2005-4453-9bd5-f1783c1861d9"
+                        },
+                        "type": "Compose",
+                        "inputs": "@concat(concat('{\"order\":', string(triggerBody()['text'])), '}')"
+                      },
+                      "Transform_Message_With_Power_Query_Online_": {
+                        "runAfter": {
+                          "Formatting_Order_JSON_for_Transformation": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "478fb194-8380-4bef-b357-62d397004c2c"
+                        },
+                        "type": "Workflow",
+                        "inputs": {
+                          "host": {
+                            "workflowReferenceName": "af05b8f2-b1fe-ea11-a813-000d3a06a63e"
+                          },
+                          "body": {
+                            "text": "e9028516-9eeb-45a3-870b-394bdbdfb187",
+                            "text_1": "@body('Initialize_Provider_Variables')?['SourceObjectName']",
+                            "text_2": "@body('Initialize_Provider_Variables')?['DestinationObjectName']",
+                            "text_3": "@outputs('Formatting_Order_JSON_for_Transformation')"
+                          }
+                        }
+                      },
+                      "Retrieving_Order_JSON_from_Transformation": {
+                        "runAfter": {
+                          "Transform_Message_With_Power_Query_Online_": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "0dd3a6f3-e70a-4521-84de-52bc3c48aa49"
+                        },
+                        "type": "Compose",
+                        "inputs": "@string(json(outputs('Transform_Message_With_Power_Query_Online_')?['Body']?['result'])?[0][0])"
+                      },
+                      "Create_Sales_Order": {
+                        "runAfter": {
+                          "Retrieving_Order_JSON_from_Transformation": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "8e57b8b0-9087-4bd2-a32c-7ace4cab1fac"
+                        },
+                        "type": "Workflow",
+                        "inputs": {
+                          "host": {
+                            "workflowReferenceName": "6f33d482-113f-eb11-a812-000d3a06a63e"
+                          },
+                          "body": {
+                            "text": "@string(json(outputs('Transform_Message_With_Power_Query_Online_')?['Body']?['result'])?[0][0])",
+                            "text_1": "@body('IOM_System_Properties')?['ProviderId']"
+                          }
+                        }
+                      },
+                      "Create_Order_Mapping": {
+                        "runAfter": {
+                          "Create_Sales_Order": [
+                            "Succeeded"
+                          ]
+                        },
+                        "metadata": {
+                          "operationMetadataId": "474ee1ec-fa52-4cc7-be6d-b9c710a46484"
+                        },
+                        "type": "Workflow",
+                        "inputs": {
+                          "host": {
+                            "workflowReferenceName": "5ca28b2d-72e2-eb11-bacb-000d3a9a723d"
+                          },
+                          "body": {
+                            "text": "@body('IOM_System_Properties')?['ProviderId']",
+                            "text_1": "@body('IOM_System_Properties')?['MappingGroupId']",
+                            "text_3": "@outputs('Create_Sales_Order')?['Body']?['salesorderid']",
+                            "text_2": "@body('Initialize_Provider_Variables')?['ExternalFieldName']",
+                            "text_4": "@string(variables('SalesOrder')?['id'])"
+                          }
+                        }
+                      }
+                    },
+                    "runAfter": {},
+                    "expression": {
+                      "equals": [
+                        "@body('Check_Order_Mapping')?['mappingexist']",
+                        "@false"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "641fa4e8-f123-4a29-be74-9130dd22b781"
+                    },
+                    "type": "If"
+                  }
+                }
+              },
+              "expression": {
+                "not": {
+                  "equals": [
+                    "@empty(variables('SalesOrder')?['cancelled_at'])",
+                    "@true"
+                  ]
+                }
+              },
+              "metadata": {
+                "operationMetadataId": "951a35be-a414-45b6-be8f-83607a013221"
+              },
+              "type": "If"
+            },
+            "Check_Order_Mapping": {
+              "runAfter": {
+                "Acknowledge_the_Provider_Message_in_IOM": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "7ea450a5-df87-46d5-8d98-e1bcaf624dc1"
+              },
+              "type": "Workflow",
+              "inputs": {
+                "host": {
+                  "workflowReferenceName": "5d1410a7-9761-4f03-8fbd-e28389c81794"
+                },
+                "body": {
+                  "text": "@string('msdyn_iommap_orders')",
+                  "text_1": "@body('IOM_System_Properties')?['ProviderId']",
+                  "text_2": "@body('IOM_System_Properties')?['MappingGroupId']",
+                  "text_3": "@body('Initialize_Provider_Variables')?['ExternalFieldName']",
+                  "text_4": "@string(variables('SalesOrder')?['id'])"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_Sales_Order_Object": [
+              "Succeeded"
+            ],
+            "Initialize_Processing_Execution_Result": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "Try-bc145962-e973-4e4c-974c-bc7c36e3cea5"
+          },
+          "type": "Scope"
+        },
+        "Catch": {
+          "actions": {
+            "Set_the_execution_result_to_failed": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "7f9a5ef9-943a-4393-89f4-bf60409fced5"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "ExecutionResult",
+                "value": "@false"
+              }
+            }
+          },
+          "runAfter": {
+            "Try": [
+              "Failed",
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "59b848ce-4874-4ebc-a25c-4a36820a87a7"
+          },
+          "type": "Scope"
+        },
+        "Finally": {
+          "actions": {
+            "Save_Provider_message_request_execution_result": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "4fd8d075-948d-482f-97b4-e87d9bee6912"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "PerformUnboundAction",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "actionName": "msdyn_UpdateProviderMessageRequestStatus",
+                  "item/ProviderMessageRequestExecutionId": "@outputs('Acknowledge_the_Provider_Message_in_IOM')?['body/ProviderMessageRequestExecutionId']",
+                  "item/IsProviderMessageRequestExecutionSuccess": "@variables('ExecutionResult')",
+                  "item/ProviderMessageRequestExecutionDetails": "@result('Try')"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Respond_to_a_PowerApp_or_flow": {
+              "runAfter": {
+                "Save_Provider_message_request_execution_result": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "014289b1-8430-443f-8740-77f3f948dc5d"
+              },
+              "type": "Response",
+              "kind": "PowerApp",
+              "inputs": {
+                "statusCode": 200,
+                "body": {
+                  "execution_result": "@{variables('ExecutionResult')}"
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "execution_result": {
+                      "title": "Execution Result",
+                      "x-ms-dynamically-added": true,
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Catch": [
+              "Succeeded",
+              "Failed",
+              "Skipped",
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "37c7c587-4836-4350-a369-be5ddd5a5109"
+          },
+          "type": "Scope"
+        }
+      },
+      "outputs": {}
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}

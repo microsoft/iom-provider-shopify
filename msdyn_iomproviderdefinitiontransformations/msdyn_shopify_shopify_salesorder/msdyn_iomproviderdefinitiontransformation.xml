@@ -1,0 +1,13 @@
+<msdyn_iomproviderdefinitiontransformation msdyn_logicalname="msdyn_shopify_shopify_salesorder">
+  <iscustomizable>0</iscustomizable>
+  <msdyn_destinationobjectname>Dataverse Sales Order</msdyn_destinationobjectname>
+  <msdyn_displayname default="Shopify Sales Order to Dataverse Sales Order">
+    <label description="Shopify Sales Order to Dataverse Sales Order" languagecode="1033" />
+  </msdyn_displayname>
+  <msdyn_iomproviderdefinition>
+    <msdyn_logicalname>msdyn_shopify</msdyn_logicalname>
+  </msdyn_iomproviderdefinition>
+  <msdyn_iomtransformationsourcetype>192350001</msdyn_iomtransformationsourcetype>
+  <msdyn_sampledata mimetype="text/plain">samplesourcedata.txt</msdyn_sampledata>
+  <msdyn_sourceobjectname>Shopify Sales Order</msdyn_sourceobjectname>
+</msdyn_iomproviderdefinitiontransformation>

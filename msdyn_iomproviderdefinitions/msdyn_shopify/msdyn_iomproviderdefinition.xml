@@ -1,0 +1,11 @@
+<msdyn_iomproviderdefinition msdyn_logicalname="msdyn_shopify">
+  <iscustomizable>0</iscustomizable>
+  <msdyn_description default="Provides a communication channel to retrieve orders, products, and related information from Shopify.">
+    <label description="Provides a communication channel to retrieve orders, products, and related information from Shopify." languagecode="1033" />
+  </msdyn_description>
+  <msdyn_displayname default="Shopify">
+    <label description="Shopify" languagecode="1033" />
+  </msdyn_displayname>
+  <msdyn_iomservicetype>[-1,192350001,-1]</msdyn_iomservicetype>
+  <msdyn_logo mimetype="image/png">msdyn_shopify_logo.Png</msdyn_logo>
+</msdyn_iomproviderdefinition>

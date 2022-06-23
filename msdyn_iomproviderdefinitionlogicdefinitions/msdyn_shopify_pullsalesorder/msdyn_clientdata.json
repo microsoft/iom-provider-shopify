@@ -1,0 +1,558 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "msdyn_sharedcommondataserviceforapps_iomshopify"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "msdyn_shopify_iom"
+        },
+        "api": {
+          "name": "shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "Recurrence": {
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 10,
+            "timeZone": "Pacific Standard Time",
+            "startTime": "2021-01-01T12:00:00Z"
+          },
+          "type": "Recurrence",
+          "runtimeConfiguration": {
+            "concurrency": {
+              "runs": 1
+            }
+          }
+        }
+      },
+      "actions": {
+        "Initialize_LastModifiedDateTimeCheckpoint": {
+          "runAfter": {
+            "IOM_System_Properties": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "LastModifiedDateTimeCheckpoint",
+                "type": "string",
+                "value": "@{getPastTime(12, 'Hour', 'yyyy-MM-ddTHH:mm:sszzz')}"
+              }
+            ]
+          }
+        },
+        "Initialize_LastModifiedDateTime": {
+          "runAfter": {},
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "LastModifiedDateTime",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "IOM_System_Properties": {
+          "runAfter": {},
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@string('{\"ProviderId\": \"5d2ace0f-74ec-4397-8dce-f93ce2bd4e69\"}')",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ProviderId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Initialize_Orders_Count": {
+          "runAfter": {
+            "Initialize_LastModifiedDateTime": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "OrdersCount",
+                "type": "integer",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "Initialize_Use_Write-in_Product": {
+          "runAfter": {
+            "Initialize_Orders_Count": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Use Write-in Product",
+                "type": "boolean",
+                "value": "@false"
+              }
+            ]
+          }
+        },
+        "Initialize_Is_Dual_Write_Enabled": {
+          "runAfter": {
+            "Initialize_LastModifiedDateTimeCheckpoint": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Is Dual Write Enabled",
+                "type": "boolean",
+                "value": "@false"
+              }
+            ]
+          }
+        },
+        "Try": {
+          "actions": {
+            "Get_Checkpoint": {
+              "runAfter": {},
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "PerformUnboundAction",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "actionName": "msdyn_GetProviderMessageCheckpoint",
+                  "item/WorkflowId": "@workflow()['tags']['xrmWorkflowId']",
+                  "item/PowerAutomateRunId": "@workflow()['run']?['name']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Checkpoint_Exists": {
+              "actions": {
+                "Set_LastModifiedDateTimeCheckpoint": {
+                  "runAfter": {},
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "LastModifiedDateTimeCheckpoint",
+                    "value": "@{addSeconds(outputs('Get_Checkpoint')?['body/Checkpoint'], 1, 'yyyy-MM-ddTHH:mm:sszzz')}"
+                  }
+                }
+              },
+              "runAfter": {
+                "Get_Checkpoint": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Save_Initial_Checkpoint": {
+                    "runAfter": {},
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "PerformUnboundAction",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "actionName": "msdyn_SaveProviderMessageCheckpoint",
+                        "item/Checkpoint": "@variables('LastModifiedDateTimeCheckpoint')",
+                        "item/WorkflowId": "@workflow()['tags']['xrmWorkflowId']",
+                        "item/PullerExecutionId": "@outputs('Get_Checkpoint')?['body/ProviderMessagePullerExecutionId']"
+                      },
+                      "authentication": "@parameters('$authentication')"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "equals": [
+                  "@empty(outputs('Get_Checkpoint')?['body/Checkpoint'])",
+                  "@false"
+                ]
+              },
+              "type": "If"
+            },
+            "Get_Write-in_Product_Environment_Variable_Value": {
+              "runAfter": {
+                "Checkpoint_Exists": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "environmentvariablevalues",
+                  "fetchXml": "<fetch mapping='logical'>  \n   <entity name='environmentvariablevalue'>   \n      <attribute name='environmentvariabledefinitionid'/>\n      <attribute name='value'/>   \n      <link-entity name='environmentvariabledefinition' to='environmentvariabledefinitionid' from='environmentvariabledefinitionid' link-type='inner'>   \n         <filter type='and'>\n            <condition attribute='schemaname' operator='eq' value='@{string('msdyn_iomUseWriteInProduct')}' />   \n          </filter>\n           <attribute name='environmentvariabledefinitionid'/> \n           <attribute name='schemaname'/>\n      </link-entity>   \n   </entity>   \n</fetch> "
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Is_Product_Config_Setting_Enabled": {
+              "actions": {
+                "Set_Use_Write-in_Product_True": {
+                  "runAfter": {},
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "Use Write-in Product",
+                    "value": "@true"
+                  }
+                }
+              },
+              "runAfter": {
+                "Get_Write-in_Product_Environment_Variable_Value": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Set_Use_Write-in_Product_False": {
+                    "runAfter": {},
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "Use Write-in Product",
+                      "value": "@false"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "equals": [
+                  "@outputs('Get_Write-in_Product_Environment_Variable_Value')?['body/value']?[0]?['value']",
+                  "yes"
+                ]
+              },
+              "type": "If"
+            },
+            "Get_Dual_Write_Enabled_Entity": {
+              "runAfter": {
+                "Is_Product_Config_Setting_Enabled": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "ListRecords",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "entityName": "entities",
+                  "$filter": "logicalname eq 'msdyn_dualwriteruntimeconfig'"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Is_Dual_Write_Enabled": {
+              "actions": {
+                "Set_Dual_Write_Enabled_True": {
+                  "runAfter": {},
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "Is Dual Write Enabled",
+                    "value": "@true"
+                  }
+                }
+              },
+              "runAfter": {
+                "Get_Dual_Write_Enabled_Entity": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Set_Dual_Write_Enabled_False": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "447d6a98-e0f1-4ee9-9732-1d82ad3c8285"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "Is Dual Write Enabled",
+                      "value": "@false"
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "equals": [
+                  "@empty(outputs('Get_Dual_Write_Enabled_Entity')?['body/value'])",
+                  "@false"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "1a2b6dae-6ef2-4af5-b592-982e176ef145"
+              },
+              "type": "If"
+            },
+            "Retrieve_All_Orders_Until_Empty": {
+              "actions": {
+                "Retrieve_All_Orders": {
+                  "runAfter": {},
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f",
+                      "operationId": "Retrieve_All_Orders",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f"
+                    },
+                    "parameters": {
+                      "updated_at_min": "@addSeconds(variables('LastModifiedDateTimeCheckpoint'),1)",
+                      "order": "updated_at asc"
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Any_Order_Exist": {
+                  "actions": {
+                    "Apply_To_Each_Sales_Order": {
+                      "foreach": "@body('Retrieve_All_Orders')?['orders']",
+                      "actions": {
+                        "Get_Customer": {
+                          "runAfter": {},
+                          "type": "Workflow",
+                          "inputs": {
+                            "host": {
+                              "workflowReferenceName": "c5164da1-7d57-ec11-8f8f-000d3a9cf681"
+                            },
+                            "body": {
+                              "text": "@string(items('Apply_To_Each_Sales_Order')?['customer/id'])",
+                              "text_1": "@outputs('Get_Checkpoint')?['body/ProviderMessagePullerExecutionId']"
+                            }
+                          }
+                        },
+                        "Compose_Sales_Order_Payload": {
+                          "runAfter": {
+                            "Get_Customer": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "Compose",
+                          "inputs": "@addProperty(addProperty(items('Apply_To_Each_Sales_Order'), 'useWriteInProductEnabled', variables('Use Write-in Product')), 'isDualWriteEnabled', variables('Is Dual Write Enabled'))"
+                        },
+                        "Process_Sales_Order": {
+                          "runAfter": {
+                            "Compose_Sales_Order_Payload": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "Workflow",
+                          "inputs": {
+                            "host": {
+                              "workflowReferenceName": "7a5c58e4-d92c-ec11-b6e5-0022481f647c"
+                            },
+                            "body": {
+                              "text": "@string(outputs('Compose_Sales_Order_Payload'))",
+                              "text_1": "@outputs('Get_Checkpoint')?['body/ProviderMessagePullerExecutionId']"
+                            }
+                          }
+                        }
+                      },
+                      "runAfter": {},
+                      "type": "Foreach",
+                      "runtimeConfiguration": {
+                        "concurrency": {
+                          "repetitions": 20
+                        }
+                      }
+                    },
+                    "Set_LastModifiedDateTime": {
+                      "runAfter": {
+                        "Apply_To_Each_Sales_Order": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "LastModifiedDateTime",
+                        "value": "@{last(body('Retrieve_All_Orders')?['orders'])?['updated_at']}"
+                      }
+                    },
+                    "Is_LastModifiedDateTime_greater_than_Checkpoint": {
+                      "actions": {
+                        "Save_Checkpoint": {
+                          "runAfter": {},
+                          "type": "OpenApiConnection",
+                          "inputs": {
+                            "host": {
+                              "connectionName": "shared_commondataserviceforapps",
+                              "operationId": "PerformUnboundAction",
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                            },
+                            "parameters": {
+                              "actionName": "msdyn_SaveProviderMessageCheckpoint",
+                              "item/Checkpoint": "@variables('LastModifiedDateTime')",
+                              "item/WorkflowId": "@workflow()['tags']['xrmWorkflowId']",
+                              "item/PullerExecutionId": "@outputs('Get_Checkpoint')?['body/ProviderMessagePullerExecutionId']"
+                            },
+                            "authentication": "@parameters('$authentication')"
+                          }
+                        },
+                        "Update_LastModifiedDateTimeCheckpoint": {
+                          "runAfter": {
+                            "Save_Checkpoint": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "SetVariable",
+                          "inputs": {
+                            "name": "LastModifiedDateTimeCheckpoint",
+                            "value": "@{addSeconds(variables('LastModifiedDateTime'), 1, 'yyyy-MM-ddTHH:mm:sszzz')}"
+                          }
+                        }
+                      },
+                      "runAfter": {
+                        "Set_LastModifiedDateTime": [
+                          "Succeeded"
+                        ]
+                      },
+                      "expression": {
+                        "and": [
+                          {
+                            "equals": [
+                              "@empty(variables('LastModifiedDateTime'))",
+                              "@false"
+                            ]
+                          },
+                          {
+                            "greater": [
+                              "@ticks(variables('LastModifiedDateTime'))",
+                              "@ticks(variables('LastModifiedDateTimeCheckpoint'))"
+                            ]
+                          }
+                        ]
+                      },
+                      "type": "If"
+                    },
+                    "Increment_Orders_Count": {
+                      "runAfter": {
+                        "Is_LastModifiedDateTime_greater_than_Checkpoint": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "IncrementVariable",
+                      "inputs": {
+                        "name": "OrdersCount",
+                        "value": "@length(outputs('Retrieve_All_Orders')?['body']['orders'])"
+                      }
+                    }
+                  },
+                  "runAfter": {
+                    "Retrieve_All_Orders": [
+                      "Succeeded"
+                    ]
+                  },
+                  "expression": {
+                    "not": {
+                      "equals": [
+                        "@empty(outputs('Retrieve_All_Orders')?['body']['orders'])",
+                        true
+                      ]
+                    }
+                  },
+                  "type": "If"
+                }
+              },
+              "runAfter": {
+                "Is_Dual_Write_Enabled": [
+                  "Succeeded"
+                ]
+              },
+              "expression": "@equals(empty(outputs('Retrieve_All_Orders')?['body']['orders']), true)",
+              "limit": {
+                "count": 60,
+                "timeout": "PT1H"
+              },
+              "type": "Until"
+            },
+            "Count_Messages": {
+              "runAfter": {
+                "Retrieve_All_Orders_Until_Empty": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_commondataserviceforapps",
+                  "operationId": "PerformUnboundAction",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                },
+                "parameters": {
+                  "actionName": "msdyn_UpdateProviderMessagePullerExecutionMessageCount",
+                  "item/ExecutionId": "@outputs('Get_Checkpoint')?['body/ProviderMessagePullerExecutionId']",
+                  "item/MessageCount": "@variables('OrdersCount')"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_Is_Dual_Write_Enabled": [
+              "Succeeded"
+            ],
+            "Initialize_Use_Write-in_Product": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        },
+        "Catch": {
+          "actions": {},
+          "runAfter": {
+            "Try": [
+              "TimedOut",
+              "Failed"
+            ]
+          },
+          "type": "Scope"
+        }
+      },
+      "outputs": {}
+    }
+  },
+  "schemaVersion": "1.0.0.0"
+}
