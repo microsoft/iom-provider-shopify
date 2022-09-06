@@ -1,1 +1,9 @@
-[{"TemplateId":"dynamichosturl","Title":"dynamicHost","Parameters":{"x-ms-apimTemplateParameter.urlTemplate":"https://@connectionParameters('storeurl')"}}]
+[
+    {
+        "TemplateId": "dynamichosturl",
+        "Title": "dynamicHost",
+        "Parameters": {
+            "x-ms-apimTemplateParameter.urlTemplate": "https://@connectionParameters('storeurl')"
+        }
+    }
+]
