@@ -1,5 +1,5 @@
 <msdyn_iomproviderdefinition msdyn_logicalname="msdyn_shopify">
-  <iscustomizable>0</iscustomizable>
+  <IsCustomizable>1</iscustomizable>
   <msdyn_description default="Provides a communication channel to retrieve orders, products, and related information from Shopify.">
     <label description="Provides a communication channel to retrieve orders, products, and related information from Shopify." languagecode="1033" />
   </msdyn_description>

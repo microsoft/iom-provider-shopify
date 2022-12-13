@@ -1,5 +1,5 @@
 <msdyn_iomproviderdefinitionconnectionref msdyn_logicalname="msdyn_sharedcommondataserviceforapps_iomshopify">
-  <iscustomizable>0</iscustomizable>
+  <IsCustomizable>1</iscustomizable>
   <msdyn_connectorid>/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps</msdyn_connectorid>
   <msdyn_description default="Enables communication from Shopify to Dataverse entities in Dynamics 365 Intelligent Order Management.">
     <label description="Enables communication from Shopify to Dataverse entities in Dynamics 365 Intelligent Order Management." languagecode="1033" />

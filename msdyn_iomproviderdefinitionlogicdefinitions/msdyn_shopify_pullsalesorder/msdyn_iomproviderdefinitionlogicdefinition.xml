@@ -1,5 +1,5 @@
 <msdyn_iomproviderdefinitionlogicdefinition msdyn_logicalname="msdyn_shopify_pullsalesorder">
-  <iscustomizable>0</iscustomizable>
+  <IsCustomizable>1</iscustomizable>
   <msdyn_displayname default="Pull Shopify Sales Orders">
     <label description="Pull Shopify Sales Orders" languagecode="1033" />
   </msdyn_displayname>

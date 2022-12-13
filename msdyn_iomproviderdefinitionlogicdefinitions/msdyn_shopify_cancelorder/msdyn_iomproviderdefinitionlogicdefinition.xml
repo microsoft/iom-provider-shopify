@@ -1,5 +1,5 @@
 <msdyn_iomproviderdefinitionlogicdefinition msdyn_logicalname="msdyn_shopify_cancelorder">
-  <iscustomizable>0</iscustomizable>
+  <IsCustomizable>1</iscustomizable>
   <msdyn_displayname default="Shopify cancel order">
     <label description="Shopify cancel order" languagecode="1033" />
   </msdyn_displayname>
