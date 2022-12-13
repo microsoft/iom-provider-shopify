@@ -1,5 +1,5 @@
 <msdyn_iomproviderdefinitiontransformation msdyn_logicalname="msdyn_shopify_shopifycustomer_guestaccount">
-  <IsCustomizable>1</iscustomizable>
+  <iscustomizable>1</iscustomizable>
   <msdyn_destinationobjectname>Dataverse Guest Account</msdyn_destinationobjectname>
   <msdyn_displayname default="Shopify Customer to Dataverse Guest Account">
     <label description="Shopify Customer to Dataverse Guest Account" languagecode="1033" />

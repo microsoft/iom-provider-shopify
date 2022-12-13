@@ -1,5 +1,5 @@
 <msdyn_iomproviderdefinitionconnectionref msdyn_logicalname="msdyn_shopify_iom">
-  <IsCustomizable>1</iscustomizable>
+  <iscustomizable>1</iscustomizable>
   <msdyn_connectorhidekey>iomshopify</msdyn_connectorhidekey>
   <msdyn_connectorid>/providers/Microsoft.PowerApps/apis/shared_cr1a6-5fshopify-5fb4ae2b78f4d4086f</msdyn_connectorid>
   <msdyn_description default="Enables communication between Dynamics 365 Intelligent Order Management to the associated Shopify account.">

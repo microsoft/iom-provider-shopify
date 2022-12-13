@@ -1,5 +1,5 @@
 <msdyn_iomproviderdefinitiontransformation msdyn_logicalname="msdyn_shopify_shopify_salesorder">
-  <IsCustomizable>1</iscustomizable>
+  <iscustomizable>1</iscustomizable>
   <msdyn_destinationobjectname>Dataverse Sales Order</msdyn_destinationobjectname>
   <msdyn_displayname default="Shopify Sales Order to Dataverse Sales Order">
     <label description="Shopify Sales Order to Dataverse Sales Order" languagecode="1033" />
